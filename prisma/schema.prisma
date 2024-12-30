@@ -1,0 +1,61 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+model user{
+  id       String   @id @default(cuid())
+  firstname  String
+  lastname   String
+  email      String   @unique
+  password   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deleteAt DateTime
+  courses  Course[]
+}
+
+// users who can only view the courses
+model userView {
+    id       String   @id @default(cuid())
+    firstname  String
+    lastname   String
+    email      String   @unique
+    password   String
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+    deleteAt DateTime
+}
+
+model Course {
+  id       String   @id @default(cuid())
+  title    String
+  content  String
+  userid String
+  user     user     @relation(fields: [userid], references: [id])
+  categoryId String
+  category Category @relation( fields: [categoryId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deleteAt DateTime
+
+  CourseType CourseType[]
+}
+model Category{
+  id       String   @id @default(cuid())
+  title String
+ courses  Course[]
+
+
+
+}
+
+ model CourseType{
+  id       String   @id @default(cuid())
+  noteid String
+  courses  Course    @relation(fields: [noteid], references: [id])
+ }
+
