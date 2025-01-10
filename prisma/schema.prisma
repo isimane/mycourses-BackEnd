@@ -12,7 +12,7 @@ model user{
   lastname   String
   email      String   @unique
   password   String
-  role      UserRole @default(USER) // New role field
+  roleid  String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   deleteAt DateTime
@@ -57,9 +57,6 @@ model Category{
   id       String   @id @default(cuid())
   title String
  courses  Course[]
-
-
-
 }
 
  model CourseType{
@@ -67,4 +64,19 @@ model Category{
   noteid String
   courses  Course    @relation(fields: [noteid], references: [id])
  }
+
+ model jobs{
+  id       String   @id @default(cuid())
+  jobid String
+  jobtitle String
+  jobdescription String
+  jobtype String
+ }
+
+ model teachers {
+  id       String   @id @default(cuid())
+  teacherid String
+  teachername String
+ }
+
 
